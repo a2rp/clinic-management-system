@@ -1,0 +1,113 @@
+.footer {
+  border-top: 1px solid var(--color-border);
+  background: #eaf1ed;
+
+  .inner {
+    width: min(100% - 48px, 1440px);
+    min-height: 112px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    padding-block: 22px;
+  }
+
+  .identity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--color-muted);
+    font-size: 13px;
+
+    p {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    p a {
+      padding-inline: 4px;
+      color: var(--color-brand-dark);
+      font-weight: 700;
+    }
+  }
+
+  .logoLink img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  .socialLinks {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    a {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: #55716a;
+      transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
+
+      svg {
+        font-size: 17px;
+      }
+
+      &:hover,
+      &:focus-visible {
+        border-color: #c8dbd1;
+        background: white;
+        color: var(--color-brand);
+      }
+    }
+  }
+
+  .tooltip {
+    z-index: 100;
+    max-width: 260px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: #20322f !important;
+    color: white !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    white-space: pre-line;
+    text-align: center;
+    box-shadow: 0 10px 25px rgb(20 49 41 / 24%);
+  }
+
+  @media (max-width: 900px) {
+    .inner {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .socialLinks {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .inner {
+      width: calc(100% - 32px);
+    }
+
+    .socialLinks {
+      gap: 5px;
+
+      a {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+}
