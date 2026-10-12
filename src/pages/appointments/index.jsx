@@ -23,7 +23,7 @@ const AppointmentsPage = ({ appointments, patients, clinicians, today, onOpenApp
 
   useEffect(() => {
     if (!searchParams.has("create")) return;
-    onOpenAppointment();
+    onOpenAppointment(searchParams.get("patient") || "");
     setSearchParams({}, { replace: true });
   }, [searchParams, setSearchParams, onOpenAppointment]);
 

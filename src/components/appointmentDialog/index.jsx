@@ -5,9 +5,9 @@ import styles from "./styles.module.css";
 
 const visitTypes = ["Consultation", "Follow-up", "Wellness", "First visit", "Medication review", "Cardiology", "Preventive care"];
 
-const AppointmentDialog = ({ appointment, patients, clinicians, today, onSave, onClose }) => {
+const AppointmentDialog = ({ appointment, patients, clinicians, today, initialPatientId, onSave, onClose }) => {
   const [values, setValues] = useState(() => appointment ? { ...appointment } : {
-    patientId: patients[0]?.id || "",
+    patientId: patients.some((patient) => patient.id === initialPatientId) ? initialPatientId : patients[0]?.id || "",
     clinicianId: clinicians.find((clinician) => clinician.onDuty)?.id || clinicians[0]?.id || "",
     date: today,
     time: "13:00",
