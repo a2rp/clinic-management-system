@@ -63,7 +63,7 @@ const PatientsPage = ({ patients, appointments, clinicians, onNewPatient, onEdit
                     <span className={styles.nameLine}><strong>{patient.name}</strong><span className={[styles.status, styles[patient.status.toLowerCase().replace("-", "")]].filter(Boolean).join(" ")}>{patient.status}</span></span>
                     <small>{patient.age} years · {patient.reason || "No visit reason added"}</small><small>{patient.phone}</small>
                   </span>
-                  <span className={styles.visitCount}>{count} visits</span><FiArrowRight className={styles.rowArrow} aria-hidden="true" />
+                  <span className={styles.visitCount}>{count} {count === 1 ? "visit" : "visits"}</span><FiArrowRight className={styles.rowArrow} aria-hidden="true" />
                 </button>
               );
             })}
