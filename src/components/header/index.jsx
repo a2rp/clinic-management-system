@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FiActivity, FiCalendar, FiChevronDown, FiMenu, FiPlus, FiUsers, FiX } from "react-icons/fi";
+import { FiActivity, FiCalendar, FiGithub, FiMenu, FiPlus, FiUserCheck, FiUsers, FiX } from "react-icons/fi";
 import styles from "./styles.module.css";
 
 const links = [
   { to: "/overview", label: "Overview", icon: FiActivity },
   { to: "/appointments", label: "Appointments", icon: FiCalendar },
   { to: "/patients", label: "Patients", icon: FiUsers },
-  { to: "/care-team", label: "Care team", icon: FiChevronDown },
+  { to: "/care-team", label: "Care team", icon: FiUserCheck },
 ];
 
 const Header = () => {
@@ -55,6 +55,10 @@ const Header = () => {
 
         <div className={styles.actions}>
           <span className={styles.clinicStatus}><i aria-hidden="true" /> Open today</span>
+          <a className={styles.repositoryLink} href="https://github.com/a2rp/clinic-management-system" target="_blank" rel="noreferrer" aria-label="Repository">
+            <FiGithub aria-hidden="true" />
+            <span>Repository</span>
+          </a>
           <button className={styles.newAppointment} type="button" onClick={goToNewAppointment}>
             <FiPlus aria-hidden="true" />
             <span>New appointment</span>
