@@ -59,7 +59,7 @@ const Header = () => {
             <FiGithub aria-hidden="true" />
             <span>Repository</span>
           </a>
-          <button className={styles.newAppointment} type="button" onClick={goToNewAppointment}>
+          <button className={styles.newAppointment} type="button" onClick={goToNewAppointment} aria-label="New appointment">
             <FiPlus aria-hidden="true" />
             <span>New appointment</span>
           </button>
