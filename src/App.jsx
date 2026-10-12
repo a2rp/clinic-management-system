@@ -44,11 +44,26 @@ const App = () => {
   const editPatient = useCallback((patient) => setDialog({ type: "patient", patient }), []);
   const editClinician = useCallback((clinician) => setDialog({ type: "clinician", clinician }), []);
 
+  const refreshPatientNextVisits = (nextAppointments, completedVisit) => {
+    setPatients((current) => current.map((patient) => {
+      const nextVisit = nextAppointments
+        .filter((appointment) => appointment.patientId === patient.id && appointment.date >= todayKey && appointment.status !== "completed")
+        .sort((first, second) => first.date.localeCompare(second.date) || first.time.localeCompare(second.time))[0]?.date || "";
+      return {
+        ...patient,
+        nextVisit,
+        ...(completedVisit?.patientId === patient.id ? { lastVisit: completedVisit.date } : {}),
+      };
+    }));
+  };
+
   const saveAppointment = (values) => {
     const isEditing = Boolean(values.id);
     const appointment = { ...values, id: values.id || makeId("visit") };
-    setAppointments((current) => isEditing ? current.map((item) => item.id === appointment.id ? appointment : item) : [...current, appointment]);
-    setPatients((current) => current.map((patient) => patient.id === appointment.patientId && (!patient.nextVisit || appointment.date < patient.nextVisit) ? { ...patient, nextVisit: appointment.date, status: patient.status === "Inactive" ? "Active" : patient.status } : patient));
+    const nextAppointments = isEditing ? appointments.map((item) => item.id === appointment.id ? appointment : item) : [...appointments, appointment];
+    setAppointments(nextAppointments);
+    refreshPatientNextVisits(nextAppointments);
+    setPatients((current) => current.map((patient) => patient.id === appointment.patientId && patient.status === "Inactive" ? { ...patient, status: "Active" } : patient));
     setDialog(null);
     showToast("success", isEditing ? "Appointment details have been updated." : "Visit booked and added to the clinic schedule.");
   };
@@ -73,8 +88,9 @@ const App = () => {
   const updateAppointmentStatus = (id, status) => {
     const appointment = appointments.find((item) => item.id === id);
     if (!appointment || appointment.status === status) return;
-    setAppointments((current) => current.map((item) => item.id === id ? { ...item, status } : item));
-    if (status === "completed") setPatients((current) => current.map((patient) => patient.id === appointment.patientId ? { ...patient, lastVisit: appointment.date } : patient));
+    const nextAppointments = appointments.map((item) => item.id === id ? { ...item, status } : item);
+    setAppointments(nextAppointments);
+    refreshPatientNextVisits(nextAppointments, status === "completed" ? appointment : null);
     showToast("success", (appointment.type || "Visit") + " marked " + statusLabel(status).toLowerCase() + ".");
   };
 
@@ -100,7 +116,9 @@ const App = () => {
       setAppointments((current) => current.map((appointment) => appointment.clinicianId === record.id ? { ...appointment, clinicianId: "" } : appointment));
       showToast("success", relatedCount ? "Clinician removed. " + relatedCount + " visit" + (relatedCount === 1 ? " is" : "s are") + " now unassigned." : "Clinician removed from the care team.");
     } else {
-      setAppointments((current) => current.filter((appointment) => appointment.id !== record.id));
+      const nextAppointments = appointments.filter((appointment) => appointment.id !== record.id);
+      setAppointments(nextAppointments);
+      refreshPatientNextVisits(nextAppointments);
       showToast("success", "Appointment removed from the schedule.");
     }
     setConfirm(null);
@@ -112,7 +130,10 @@ const App = () => {
   const confirmationDetails = confirm && {
     patient: {
       title: "Remove this patient record?",
-      description: "This removes " + confirm.record.name + " and " + appointments.filter((appointment) => appointment.patientId === confirm.record.id).length + " linked appointment record(s). This action cannot be undone.",
+      description: (() => {
+        const linkedCount = appointments.filter((appointment) => appointment.patientId === confirm.record.id).length;
+        return linkedCount ? "This removes " + confirm.record.name + " and " + linkedCount + " linked visit" + (linkedCount === 1 ? "." : "s.") + " This action cannot be undone." : "This removes " + confirm.record.name + " from the patient directory. This action cannot be undone.";
+      })(),
     },
     clinician: {
       title: "Remove this clinician?",
@@ -144,7 +165,7 @@ const App = () => {
       {dialog?.type === "patient" && <PatientDialog patient={dialog.patient} onSave={savePatient} onClose={closeDialog} />}
       {dialog?.type === "clinician" && <ClinicianDialog clinician={dialog.clinician} onSave={saveClinician} onClose={closeDialog} />}
       {dialog?.type === "appointmentDetails" && <AppointmentDetails appointment={currentAppointment} patient={currentPatient} clinician={currentClinician} onClose={closeDialog} onStatusChange={updateAppointmentStatus} onEdit={editAppointment} onDelete={(appointment) => requestDelete("appointment", appointment)} />}
-      {confirm && <ConfirmDialog title={confirmationDetails.title} description={confirmationDetails.description} confirmLabel="Remove record" onConfirm={confirmDelete} onClose={() => setConfirm(null)} />}
+      {confirm && <ConfirmDialog title={confirmationDetails.title} description={confirmationDetails.description} confirmLabel={confirm.type === "appointment" ? "Remove visit" : confirm.type === "clinician" ? "Remove clinician" : "Remove patient"} onConfirm={confirmDelete} onClose={() => setConfirm(null)} />}
     </div>
   );
 };
