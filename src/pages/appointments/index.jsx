@@ -89,7 +89,7 @@ const AppointmentsPage = ({ appointments, patients, clinicians, today, onOpenApp
               <p className={styles.sectionLabel}>Visit list</p>
               <h2>{visibleAppointments.length} appointments</h2>
             </div>
-            <span className={styles.dayChip}><FiCalendar aria-hidden="true" /> {dayTotal} booked today</span>
+            <span className={styles.dayChip}><FiCalendar aria-hidden="true" /> {dayTotal} booked {selectedDate === today ? "today" : "that day"}</span>
           </div>
 
           <div className={styles.tableHeader} aria-hidden="true">
