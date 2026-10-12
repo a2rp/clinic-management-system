@@ -1,0 +1,125 @@
+.form {
+  display: grid;
+  gap: 17px;
+
+  .field {
+    display: grid;
+    gap: 7px;
+
+    label {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      color: var(--color-ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    label span {
+      color: var(--color-muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid #d5e2db;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--color-ink);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+
+      &:focus {
+        border-color: var(--color-brand);
+        box-shadow: 0 0 0 3px rgb(23 107 91 / 12%);
+      }
+
+      &[aria-invalid="true"] {
+        border-color: #c94f42;
+      }
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+  }
+
+  .twoColumns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .error {
+    color: #b34438;
+    font-size: 13px;
+  }
+
+  .formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 5px;
+  }
+
+  .cancelButton,
+  .submitButton {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 17px;
+    border-radius: 11px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+    svg {
+      font-size: 17px;
+    }
+  }
+
+  .cancelButton {
+    border: 1px solid var(--color-border);
+    background: #fff;
+    color: var(--color-ink);
+
+    &:hover {
+      background: #f3f7f5;
+    }
+  }
+
+  .submitButton {
+    border: 1px solid var(--color-brand);
+    background: var(--color-brand);
+    color: #fff;
+
+    &:hover {
+      border-color: var(--color-brand-dark);
+      background: var(--color-brand-dark);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .twoColumns {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .formActions {
+      flex-direction: column-reverse;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
