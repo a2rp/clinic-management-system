@@ -1,0 +1,215 @@
+.details {
+  display: grid;
+  gap: 20px;
+
+  .statusRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .status {
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #eaf3ed;
+    color: #326b50;
+    font-size: 13px;
+    font-weight: 750;
+  }
+
+  .confirmed {
+    background: #eaf1f7;
+    color: #3b6689;
+  }
+
+  .arrived,
+  .checked-in {
+    background: #fff4dc;
+    color: #8a6924;
+  }
+
+  .in-room {
+    background: #e9e6fa;
+    color: #6156a3;
+  }
+
+  .completed {
+    background: #e8f4ec;
+    color: #35734d;
+  }
+
+  .id {
+    color: var(--color-muted);
+    font-size: 13px;
+  }
+
+  .visitSummary {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px;
+    border-radius: 15px;
+    background: #f0f6f2;
+
+    strong {
+      color: var(--color-ink);
+      font-size: 17px;
+    }
+
+    p {
+      margin-top: 4px;
+      color: var(--color-muted);
+      font-size: 14px;
+    }
+  }
+
+  .summaryIcon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 13px;
+    background: #fff;
+    color: var(--color-brand);
+
+    svg {
+      font-size: 19px;
+    }
+  }
+
+  .informationGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+
+    > div {
+      min-width: 0;
+      display: grid;
+      align-content: start;
+      gap: 5px;
+      padding: 13px;
+      border: 1px solid #e2ebe5;
+      border-radius: 13px;
+    }
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-muted);
+      font-size: 13px;
+    }
+
+    span svg {
+      font-size: 15px;
+    }
+
+    strong {
+      overflow-wrap: anywhere;
+      color: var(--color-ink);
+      font-size: 14px;
+    }
+
+    small {
+      color: var(--color-muted);
+      font-size: 13px;
+    }
+  }
+
+  .note {
+    display: grid;
+    gap: 6px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--color-coral);
+    border-radius: 0 12px 12px 0;
+    background: #fff8f4;
+
+    span {
+      color: #945a43;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    p {
+      color: var(--color-ink);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 9px;
+  }
+
+  .primaryAction,
+  .secondaryAction,
+  .deleteAction {
+    min-height: 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 13px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+
+    svg {
+      font-size: 16px;
+    }
+  }
+
+  .primaryAction {
+    border: 1px solid var(--color-brand);
+    background: var(--color-brand);
+    color: #fff;
+
+    &:hover {
+      background: var(--color-brand-dark);
+    }
+  }
+
+  .secondaryAction {
+    border: 1px solid var(--color-border);
+    background: #fff;
+    color: var(--color-ink);
+
+    &:hover {
+      background: #f3f7f5;
+    }
+  }
+
+  .deleteAction {
+    border: 1px solid #ead0cc;
+    background: #fff;
+    color: #a64237;
+
+    &:hover {
+      background: #fff5f3;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .informationGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .actions {
+      align-items: stretch;
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
