@@ -12,15 +12,13 @@
     animation: turn 800ms linear infinite;
   }
 
-  @keyframes turn {
-    to {
-      transform: rotate(1turn);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     span {
       animation: none;
     }
   }
+}
+
+@keyframes turn {
+  to { transform: rotate(1turn); }
 }
